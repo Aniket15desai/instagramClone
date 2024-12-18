@@ -1,0 +1,54 @@
+[
+    {
+      "id": "1",
+      "image": "samples/landscapes/beach-boat",
+      "image_url": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/1.jpg",
+      "caption": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic repellendus unde blanditiis. Eos fugiat dolorem ea fugit aut sapiente corrupti autem dolores deleniti architecto, omnis, amet unde dignissimos quam minima?",
+      "user": {
+        "id": "u1",
+        "avatar_url": "samples/people/boy-snow-hoodie",
+        "image_url": "https://instagram.fgoi2-1.fna.fbcdn.net/v/t51.29350-15/401936379_6898582503534777_3472891604436827481_n.webp?stp=dst-jpg_e35_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEzNTAuc2RyLmYyOTM1MC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=instagram.fgoi2-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=YJmDTfKvxG4Q7kNvgFQ7CbI&_nc_gid=c111c60470e14a548f6c737794c82279&edm=AP4sbd4BAAAA&ccb=7-5&ig_cache_key=MzIzNTk1MTIzNDAyNzY2ODU4Mw%3D%3D.3-ccb7-5&oh=00_AYAiyFNoyFkem_mIF_fkSTcXfVCvG-aFBzH8oddtIUxx5A&oe=6764E484&_nc_sid=7a9f4b",
+        "username": "aniketdesai123",
+        "name": "Aniket Sardesai"
+      }
+    },
+    {
+      "id": "2",
+      "image": "samples/woman-on-a-football-field",
+      "image_url": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/2.jpg",
+      "caption": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic repellendus unde blanditiis. Eos fugiat dolorem ea fugit aut sapiente corrupti autem dolores deleniti architecto, omnis, amet unde dignissimos quam minima?",
+      "user": {
+        "id": "u1",
+        "avatar_url": "samples/people/smiling-man",
+        "image_url": "https://instagram.fgoi2-1.fna.fbcdn.net/v/t51.29350-15/401936379_6898582503534777_3472891604436827481_n.webp?stp=dst-jpg_e35_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEzNTAuc2RyLmYyOTM1MC5kZWZhdWx0X2ltYWdlIn0&_nc_ht=instagram.fgoi2-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=YJmDTfKvxG4Q7kNvgFQ7CbI&_nc_gid=c111c60470e14a548f6c737794c82279&edm=AP4sbd4BAAAA&ccb=7-5&ig_cache_key=MzIzNTk1MTIzNDAyNzY2ODU4Mw%3D%3D.3-ccb7-5&oh=00_AYAiyFNoyFkem_mIF_fkSTcXfVCvG-aFBzH8oddtIUxx5A&oe=6764E484&_nc_sid=7a9f4b",
+        "username": "aniketdesai123",
+        "name": "Aniket Sardesai"
+      }
+    },
+    {
+      "id": "3",
+      "image": "samples/dessert-on-a-plate",
+      "image_url": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/3.jpg",
+      "caption": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic repellendus unde blanditiis. Eos fugiat dolorem ea fugit aut sapiente corrupti autem dolores deleniti architecto, omnis, amet unde dignissimos quam minima?",
+      "user": {
+        "id": "u1",
+        "avatar_url": "samples/bike",
+        "image_url": "https://instagram.fgoi2-1.fna.fbcdn.net/v/t51.2885-19/354201470_568185568817924_726519622979512690_n.jpg?_nc_ht=instagram.fgoi2-1.fna.fbcdn.net&_nc_cat=108&_nc_ohc=d8O5laaCzaUQ7kNvgGtvsp5&_nc_gid=3b71398d0c054c73aa51c7ce3658af9e&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AYCq0_LCstjrv3LvSHNat8Swc9wK67uJBxIJ2Nx2jYCnqw&oe=676531D1&_nc_sid=7a9f4b",
+        "username": "aniketdesai123",
+        "name": "Aniket Sardesai"
+      }
+    },
+    {
+      "id": "4",
+      "image": "samples/balloons",
+      "image_url": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/images/4.jpg",
+      "caption": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic repellendus unde blanditiis. Eos fugiat dolorem ea fugit aut sapiente corrupti autem dolores deleniti architecto, omnis, amet unde dignissimos quam minima?",
+      "user": {
+        "id": "u1",
+        "avatar_url": "samples/animals/cat",
+        "image_url": "https://instagram.fgoi2-1.fna.fbcdn.net/v/t51.2885-19/354201470_568185568817924_726519622979512690_n.jpg?_nc_ht=instagram.fgoi2-1.fna.fbcdn.net&_nc_cat=108&_nc_ohc=d8O5laaCzaUQ7kNvgGtvsp5&_nc_gid=3b71398d0c054c73aa51c7ce3658af9e&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AYCq0_LCstjrv3LvSHNat8Swc9wK67uJBxIJ2Nx2jYCnqw&oe=676531D1&_nc_sid=7a9f4b",
+        "username": "omkardesai21",
+        "name": "Omkar Sardesai"
+      }
+    }
+  ]
