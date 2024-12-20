@@ -1,9 +1,24 @@
-import React from 'react'
-import { FlatList } from 'react-native'
-import posts from '@/assets/data/post.json';
+import React, { useEffect, useState } from 'react'
+import { Alert, FlatList } from 'react-native'
 import PostListItem from '@/src/components/PostLostItem';
+import { supabase } from '@/src/lib/supabase';
 
 export default function Home() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetchPosts();
+  })
+
+  const fetchPosts = async () => {
+    const { data, error } = await supabase.from('posts').select('*, user:profiles(*)');
+    if (error) {
+      Alert.alert('Something went wrong');
+    }
+
+    setPosts(data);
+  }
+  
   return (
     <FlatList 
         data={posts}

@@ -20,7 +20,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.aniket1581.Instagram"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -35,6 +39,14 @@
         }
       ],
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "9ae90878-78f2-4a21-ae8b-c1ca43ea5d75"
+      }
+    }
   }
 }

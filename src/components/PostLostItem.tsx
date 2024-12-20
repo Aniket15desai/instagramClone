@@ -20,7 +20,7 @@ export default function PostListItem({post}:any) {
         .resize(thumbnail().width(width).height(width));
 
     const avatar = cld.image(post?.user.avatar_url);
-    image
+    avatar
         .resize(thumbnail().width(48).height(48).gravity(focusOn(FocusOn.face())));
     
     return(

@@ -1,34 +1,106 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Pressable, Text, TextInput, View, Modal, Button } from 'react-native';
+import { Image, Pressable, Text, TextInput, View, Modal, Button, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import posts from '@/assets/data/post.json';
 import { Feather } from '@expo/vector-icons';
+import { supabase } from '@/src/lib/supabase';
+import { useAuth } from '@/src/providers/AuthProvider';
+import { cld, uploadImage } from '@/src/lib/cloudinary';
+import { thumbnail } from "@cloudinary/url-gen/actions/resize";
+import { AdvancedImage } from 'cloudinary-react-native';
+
+// Define TypeScript type for the profile data
+type Profile = {
+    id: string;
+    username: string;
+    bio: string;
+    full_name: string;
+    avatar_url: string; // Make sure this matches your database schema
+};
 
 export default function ProfileScreen() {
+    const { session, user } = useAuth();
+    const [loading, setLoading] = useState(true);
     const [image, setImage] = useState<string>('');
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [name, setName] = useState(posts[0].user.name);
     const [username, setUsername] = useState(posts[0].user.username);
-    const [bio, setBio] = useState("Be extra nice to yourself ✨");
+    const [remoteImage, setRemoteImage] = useState<string>('');
+    const [bio, setBio] = useState("");
+    const [imageId, setImageId] = useState("");
 
     useEffect(() => {
-        if (image === '') {
-            pickImage();
+        if (session) getProfile();
+    }, [session]);
+
+    const getProfile = async () => {
+        const { data, error } = await supabase
+            .from('profiles') // Specify the type here
+            .select('*')
+            .eq('id', session?.user.id)
+            .single();
+
+        if (error) {
+            Alert.alert('Something went wrong');
+            return;
         }
-    }, [image]);
+
+        if (data) {
+            setRemoteImage(data.avatar_url);
+            setUsername(data.username);
+            setName(data.full_name);
+            setBio(data.bio);
+        }
+    };
+
+    const updateProfile = async () => {
+        if (!user) {
+            return;
+        }
+
+        const updatedProfile: Partial<Profile> = {
+            id: user.id,
+            username,
+            bio,
+            full_name: name,
+        };
+
+        if (image) {
+            const response = await uploadImage(image);
+            updatedProfile.avatar_url = response.public_id;
+        }
+
+        const { error } = await supabase
+            .from('profiles')
+            .update(updatedProfile)
+            .eq('id', user.id);;
+
+        if (error) {
+            Alert.alert('Failed to update profile');
+        } else {
+            Alert.alert('Profile updated successfully');
+            setIsModalVisible(false);
+        }
+    };
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ['images'],
             allowsEditing: true,
-            aspect: [4, 4],
-            quality: 1,
+            aspect: [1, 1],
+            quality: 0.5,
         });
 
         if (!result.canceled) {
             setImage(result.assets[0].uri);
         }
     };
+
+    let remoteCldImage;
+    if (remoteImage) {
+        remoteCldImage = cld.image(remoteImage);
+        remoteCldImage.resize(thumbnail().width(300).height(300));
+    }
 
     return (
         <View className="p-4 bg-white flex-1">
@@ -37,10 +109,15 @@ export default function ProfileScreen() {
                 {image ? (
                     <Image
                         source={{ uri: image }}
-                        className="w-24 h-24 rounded-full bg-gray-300"
+                        className="w-24 aspect-square self-center rounded-full bg-slate-300"
+                    />
+                ) : remoteCldImage ? (
+                    <AdvancedImage
+                        cldImg={remoteCldImage}
+                        className="w-24 aspect-square self-center rounded-full bg-slate-300"
                     />
                 ) : (
-                    <View className="w-24 h-24 rounded-full bg-gray-300" />
+                    <View className="w-24 aspect-square self-center rounded-full bg-slate-300" />
                 )}
                 <View className="flex-row gap-8">
                     <View className="items-center">
@@ -74,13 +151,13 @@ export default function ProfileScreen() {
                     <Text className="text-black text-xs font-normal">Edit Profile</Text>
                 </Pressable>
                 <Pressable
-                    onPress={() => {}}
+                    onPress={() => supabase.auth.signOut()}
                     className="flex-1 bg-gray-300 p-2 items-center rounded-md"
                 >
-                    <Text className="text-black text-xs font-normal">Share Profile</Text>
+                    <Text className="text-black text-xs font-normal">Logout</Text>
                 </Pressable>
                 <Pressable
-                    onPress={() => {}}
+                    onPress={() => { }}
                     className="bg-gray-300 w-8 h-8 items-center justify-center rounded-md"
                 >
                     <Feather name="user-plus" size={16} />
@@ -106,10 +183,19 @@ export default function ProfileScreen() {
                     <Text className="text-2xl font-bold text-center mb-6">Edit Profile</Text>
 
                     {/* Profile Image */}
-                    <Image
-                        source={{ uri: image || 'https://placehold.co/100' }}
-                        className="w-24 h-24 rounded-full self-center bg-gray-200"
-                    />
+                    {image ? (
+                        <Image
+                            source={{ uri: image }}
+                            className="w-24 aspect-square self-center rounded-full bg-slate-300"
+                        />
+                    ) : remoteCldImage ? (
+                        <AdvancedImage
+                            cldImg={remoteCldImage}
+                            className="w-24 aspect-square self-center rounded-full bg-slate-300"
+                        />
+                    ) : (
+                        <View className="w-24 aspect-square self-center rounded-full bg-slate-300" />
+                    )}
                     <Pressable onPress={pickImage}>
                         <Text className="text-blue-500 text-center mt-2">Change profile photo</Text>
                     </Pressable>
@@ -137,12 +223,7 @@ export default function ProfileScreen() {
 
                     {/* Save Button */}
                     <View className="mt-auto">
-                        <Pressable
-                            onPress={() => setIsModalVisible(false)}
-                            className="bg-blue-500 p-3 rounded-md items-center"
-                        >
-                            <Text className="text-white text-lg font-semibold">Save</Text>
-                        </Pressable>
+                        <Button title="Update profile" onPress={updateProfile} />
                     </View>
                 </View>
             </Modal>
