@@ -1,6 +1,6 @@
 import { Cloudinary } from "@cloudinary/url-gen";
 import { upload } from "cloudinary-react-native";
-import { UploadApiResponse } from "cloudinary-react-native/lib/typescript/src/api/upload/model/params/upload-params";
+import { UploadApiOptions, UploadApiResponse } from "cloudinary-react-native/lib/typescript/src/api/upload/model/params/upload-params";
 
 export const cld = new Cloudinary({
     cloud: {
@@ -9,9 +9,10 @@ export const cld = new Cloudinary({
 });
 
 export const uploadImage = async (file: string) => {
-    const options = {
+    const options: UploadApiOptions = {
       upload_preset: 'Default',
       unsigned: true,
+      resource_type: 'auto'
     }
 
     return new Promise<UploadApiResponse>(async (resolve, reject) => {  

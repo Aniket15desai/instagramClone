@@ -18,6 +18,24 @@ type Profile = {
     avatar_url: string; // Make sure this matches your database schema
 };
 
+type User = {
+    avatar_url: string;
+    bio: string;
+    full_name: string;
+    id: string;
+    updated_at: string | null;
+    username: string;
+};
+
+type Post = {
+    caption: string;
+    created_at: string;
+    id: number;
+    image: string;
+    user: User;
+    user_id: string;
+};
+
 export default function ProfileScreen() {
     const { session, user } = useAuth();
     const [loading, setLoading] = useState(true);
@@ -28,6 +46,20 @@ export default function ProfileScreen() {
     const [remoteImage, setRemoteImage] = useState<string>('');
     const [bio, setBio] = useState("");
     const [imageId, setImageId] = useState("");
+    const [userPosts, setUserPosts] = useState<Post[]>([]);
+
+    useEffect(() => {
+        fetchPosts();
+    }, [])
+
+    const fetchPosts = async () => {
+        const { data, error } = await supabase.from('posts').select('*, user:profiles(*)');
+        if (error) {
+            Alert.alert('Something went wrong');
+        }
+
+        setUserPosts(data as Post[]);
+    }
 
     useEffect(() => {
         if (session) getProfile();
@@ -46,7 +78,7 @@ export default function ProfileScreen() {
         }
 
         if (data) {
-            setRemoteImage(data.avatar_url);
+            setRemoteImage(data.avatar_url || 'user_ecqd5z');
             setUsername(data.username);
             setName(data.full_name);
             setBio(data.bio);
@@ -121,15 +153,15 @@ export default function ProfileScreen() {
                 )}
                 <View className="flex-row gap-8">
                     <View className="items-center">
-                        <Text className="font-semibold text-xl">{posts.length}</Text>
+                        <Text className="font-semibold text-xl">{userPosts.length}</Text>
                         <Text className="text-sm">Posts</Text>
                     </View>
                     <View className="items-center">
-                        <Text className="font-semibold text-xl">60K</Text>
+                        <Text className="font-semibold text-xl">170</Text>
                         <Text className="text-sm">Followers</Text>
                     </View>
                     <View className="items-center">
-                        <Text className="font-semibold text-xl">4</Text>
+                        <Text className="font-semibold text-xl">171</Text>
                         <Text className="text-sm">Following</Text>
                     </View>
                 </View>
